@@ -45,6 +45,28 @@ import static org.junit.Assert.*;
  * @since 09.09.2004
  */
 public class ResourceTests {
+	@Test
+	public void testDefaultResourceLoader()throws IOException {
+		ResourceLoader resourceLoader = new DefaultResourceLoader();
+		ResourceLoader fileSystemResourceLoader = new FileSystemResourceLoader();
+		Resource fileResource1 = resourceLoader.getResource("D:/Df/nacos.txt");
+		System.out.println("fileResource1 is FileSystemResource:" + (fileResource1 instanceof FileSystemResource));
+		System.out.println("fileResource1 is ClassPathContextResource:" + (fileResource1 instanceof DefaultResourceLoader.ClassPathContextResource));
+
+		fileResource1 = fileSystemResourceLoader.getResource("D:/Df/nacos.txt");
+		System.out.println("fileResource1 is FileSystemResource:" + (fileResource1 instanceof FileSystemResource));
+		System.out.println("fileResource1 is ClassPathContextResource:" + (fileResource1 instanceof DefaultResourceLoader.ClassPathContextResource));
+
+		Resource fileResource2 = resourceLoader.getResource("/Df/nacos.txt");
+		System.out.println("fileResource2 is ClassPathResource:" + (fileResource2 instanceof ClassPathResource));
+
+		Resource urlResource1 = resourceLoader.getResource("file:/Df/nacos.txt");
+		System.out.println("urlResource1 is UrlResource:" + (urlResource1 instanceof UrlResource));
+		System.out.println("urlResource1 is FileUrlResource:" + (urlResource1 instanceof FileUrlResource));
+
+		Resource urlResource2 = resourceLoader.getResource("http://www.baidu.com");
+		System.out.println("urlResource1 is urlResource:" + (urlResource2 instanceof  UrlResource));
+	}
 
 	@Test
 	public void testByteArrayResource() throws IOException {
