@@ -591,7 +591,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	protected NamespaceHandlerResolver createDefaultNamespaceHandlerResolver() {
 		ClassLoader cl = (getResourceLoader() != null ? getResourceLoader().getClassLoader() : getBeanClassLoader());
-		return new DefaultNamespaceHandlerResolver(cl);
+		return new DefaultNamespaceHandlerResolver(cl);// <x>
 	}
 
 }
