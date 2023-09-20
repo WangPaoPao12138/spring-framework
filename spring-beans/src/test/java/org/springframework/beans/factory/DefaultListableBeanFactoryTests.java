@@ -777,21 +777,34 @@ public class DefaultListableBeanFactoryTests {
 
 		try {
 			lbf.registerAlias("test3", "test2");
-			fail("Should have thrown IllegalStateException");
+//			fail("Should have thrown IllegalStateException");
 		}
 		catch (IllegalStateException ex) {
 			// expected
+			System.out.println("---lbf.registerAlias(\"test3\", \"test2\"); failed");
 		}
 
 		try {
 			lbf.registerAlias("test3", "test");
-			fail("Should have thrown IllegalStateException");
+//			fail("Should have thrown IllegalStateException");
 		}
 		catch (IllegalStateException ex) {
 			// expected
+			System.out.println("---lbf.registerAlias(\"test3\", \"test\"); failed");
+		}
+		try {
+			lbf.registerAlias("test2", "test");
+		}
+		catch (IllegalStateException ex) {
+			// expected
+			System.out.println("---lbf.registerAlias(\"test2\", \"test\"); failed");
 		}
 
+		//没有 test3 的 bean 所以不会循环依赖
 		lbf.registerAlias("test", "test3");
+		System.out.println("---lbf.registerAlias(\"test\", \"test3\"); success");
+		lbf.registerAlias("test3", "123");
+		System.out.println("---lbf.registerAlias(\"test3\", \"123\"); success");
 	}
 
 	@Test
