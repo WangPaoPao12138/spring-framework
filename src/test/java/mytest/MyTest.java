@@ -2,9 +2,9 @@ package mytest;
 
 import mytest.obj.MyApplicationAware;
 import mytest.obj.MyBeanPostProcessor;
+import mytest.obj.MyInitializingBean1;
+import mytest.obj.MyInitializingBean2;
 import org.junit.Test;
-import org.springframework.aop.framework.autoproxy.AdvisorAutoProxyCreatorIntegrationTests;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -64,6 +64,20 @@ public class MyTest {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
 		MyBeanPostProcessor test = (MyBeanPostProcessor) applicationContext.getBean("myBeanPostProcessor");
 		test.display();
+	}
+	@Test
+	public void testInitializingBean01(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		MyInitializingBean1 test = (MyInitializingBean1) applicationContext.getBean("myInitializingBean1");
+		System.out.println("name ：" + test.getName());
+	}
+	@Test
+	public void testInitializingBean02(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		MyInitializingBean2 test = (MyInitializingBean2) applicationContext.getBean("myInitializingBean2");
+		System.out.println("name ：" + test.getName());
 	}
 
 }

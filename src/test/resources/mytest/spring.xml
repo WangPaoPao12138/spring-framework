@@ -12,4 +12,11 @@
 	<bean id="myBeanPostProcessor"
           class="mytest.obj.MyBeanPostProcessor">
     </bean>
+	<bean id="myInitializingBean1" class="mytest.obj.MyInitializingBean1">
+		<property name="name" value="Gin 1 号"/>
+	</bean>
+	<bean id="myInitializingBean2" class="mytest.obj.MyInitializingBean2"
+		  init-method="setOtherName">
+		<property name="name" value="Gin 1 号"/>
+	</bean>
 </beans>
