@@ -1,9 +1,6 @@
 package mytest;
 
-import mytest.obj.MyApplicationAware;
-import mytest.obj.MyBeanPostProcessor;
-import mytest.obj.MyInitializingBean1;
-import mytest.obj.MyInitializingBean2;
+import mytest.obj.*;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -78,6 +75,23 @@ public class MyTest {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
 		MyInitializingBean2 test = (MyInitializingBean2) applicationContext.getBean("myInitializingBean2");
 		System.out.println("name ：" + test.getName());
+	}
+	@Test
+	public void testBeanLifeCycle(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ClassPathResource resource = new ClassPathResource("spring.xml",MyTest.class);
+		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions(resource);
+		// BeanFactory 容器一定要调用该方法进行 BeanPostProcessor 注册
+		factory.addBeanPostProcessor(new LifeCycleBean("addBeanPostProcessor")); // <1>
+
+		LifeCycleBean lifeCycleBean = (LifeCycleBean) factory.getBean("lifeCycleBean");
+		lifeCycleBean.display();
+
+		System.out.println("方法调用完成，容器开始关闭....");
+		// 关闭容器
+		factory.destroySingletons();
 	}
 
 }

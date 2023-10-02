@@ -19,4 +19,8 @@
 		  init-method="setOtherName">
 		<property name="name" value="Gin 1 号"/>
 	</bean>
+	<bean id="lifeCycleBean" class="mytest.obj.LifeCycleBean"
+		  init-method="initMethod" destroy-method="destroyMethod">
+		<property name="test" value="test"/>
+	</bean>
 </beans>
