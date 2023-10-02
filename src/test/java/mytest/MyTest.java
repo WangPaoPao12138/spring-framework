@@ -126,7 +126,7 @@ public class MyTest {
 		StudentService studentService = (StudentService) context.getBean("student_1");
 		System.out.println("student_1 name:" + studentService.getName());
 	}
-	
+	//@Test -Dspring.profiles.active=dev 不生效
 	public static void main(String[] args) {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
