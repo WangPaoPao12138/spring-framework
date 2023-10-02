@@ -23,4 +23,11 @@
 		  init-method="initMethod" destroy-method="destroyMethod">
 		<property name="test" value="test"/>
 	</bean>
+
+	<bean id="studentService" class="mytest.obj.StudentService">
+		<property name="name" value="Gin"/>
+		<property name="age" value="10"/>
+	</bean>
+	<bean class="mytest.obj.BeanFactoryPostProcessor_1"/>
+	<bean class="mytest.obj.BeanFactoryPostProcessor_2"/>
 </beans>

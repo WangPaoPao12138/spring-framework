@@ -93,5 +93,15 @@ public class MyTest {
 		// 关闭容器
 		factory.destroySingletons();
 	}
+	@Test
+	public void testBeanFactoryPostProcessor(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+
+		StudentService studentService = (StudentService) context.getBean("studentService");
+		System.out.println("student name:" + studentService.getName() + "-- age:" + studentService.getAge());
+
+	}
+
 
 }
