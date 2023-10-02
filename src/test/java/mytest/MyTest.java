@@ -102,6 +102,20 @@ public class MyTest {
 		System.out.println("student name:" + studentService.getName() + "-- age:" + studentService.getAge());
 
 	}
+	@Test
+	public void testPropertyOverrideConfigurer01(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		StudentService studentService = (StudentService) context.getBean("student");
+		System.out.println("student name:" + studentService.getName());
+	}	@Test
+	public void testPropertyOverrideConfigurer02(){
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		StudentService studentService = (StudentService) context.getBean("student_1");
+		System.out.println("student_1 name:" + studentService.getName());
+	}
+
 
 
 }
