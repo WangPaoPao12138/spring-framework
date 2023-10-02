@@ -23,8 +23,9 @@ public class MyTest {
 //	private static final String CLASSNAME = CLASS.getSimpleName();
 
 	private static final String DEFAULT_CONTEXT = "spring.xml";
+
 	protected BeanFactory getBeanFactory() throws IOException {
-		ClassPathResource resource = new ClassPathResource(DEFAULT_CONTEXT,MyTest.class);
+		ClassPathResource resource = new ClassPathResource(DEFAULT_CONTEXT, MyTest.class);
 		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 		reader.loadBeanDefinitions(resource);
@@ -37,15 +38,17 @@ public class MyTest {
 		MyApplicationAware applicationAware = (MyApplicationAware) factory.getBean("myApplicationAware");
 		applicationAware.display();
 	}
+
 	@Test
 	public void testAware02() throws Exception {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		MyApplicationAware applicationAware = (MyApplicationAware) applicationContext.getBean("myApplicationAware");
 		applicationAware.display();
 	}
+
 	@Test
-	public void testBeanPostProcessor01(){
-		ClassPathResource resource = new ClassPathResource("spring.xml",MyTest.class);
+	public void testBeanPostProcessor01() {
+		ClassPathResource resource = new ClassPathResource("spring.xml", MyTest.class);
 		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
 		//手动添加才执行postProcessor方法
 		MyBeanPostProcessor beanPostProcessorTest = new MyBeanPostProcessor();
@@ -55,31 +58,35 @@ public class MyTest {
 		MyBeanPostProcessor test = (MyBeanPostProcessor) factory.getBean("myBeanPostProcessor");
 		test.display();
 	}
+
 	@Test
-	public void testBeanPostProcessor02(){
+	public void testBeanPostProcessor02() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		MyBeanPostProcessor test = (MyBeanPostProcessor) applicationContext.getBean("myBeanPostProcessor");
 		test.display();
 	}
+
 	@Test
-	public void testInitializingBean01(){
+	public void testInitializingBean01() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		MyInitializingBean1 test = (MyInitializingBean1) applicationContext.getBean("myInitializingBean1");
 		System.out.println("name ：" + test.getName());
 	}
+
 	@Test
-	public void testInitializingBean02(){
+	public void testInitializingBean02() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		MyInitializingBean2 test = (MyInitializingBean2) applicationContext.getBean("myInitializingBean2");
 		System.out.println("name ：" + test.getName());
 	}
+
 	@Test
-	public void testBeanLifeCycle(){
+	public void testBeanLifeCycle() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ClassPathResource resource = new ClassPathResource("spring.xml",MyTest.class);
+		ClassPathResource resource = new ClassPathResource("spring.xml", MyTest.class);
 		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 		reader.loadBeanDefinitions(resource);
@@ -93,29 +100,39 @@ public class MyTest {
 		// 关闭容器
 		factory.destroySingletons();
 	}
+
 	@Test
-	public void testBeanFactoryPostProcessor(){
+	public void testBeanFactoryPostProcessor() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 
 		StudentService studentService = (StudentService) context.getBean("studentService");
 		System.out.println("student name:" + studentService.getName() + "-- age:" + studentService.getAge());
 
 	}
+
 	@Test
-	public void testPropertyOverrideConfigurer01(){
+	public void testPropertyOverrideConfigurer01() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		StudentService studentService = (StudentService) context.getBean("student");
 		System.out.println("student name:" + studentService.getName());
-	}	@Test
-	public void testPropertyOverrideConfigurer02(){
+	}
+
+	@Test
+	public void testPropertyOverrideConfigurer02() {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml",MyTest.class);
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		StudentService studentService = (StudentService) context.getBean("student_1");
 		System.out.println("student_1 name:" + studentService.getName());
 	}
-
+	
+	public static void main(String[] args) {
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
+		StudentService studentService = (StudentService) context.getBean("studentService_config");
+		System.out.println("studentService_config name:" + studentService.getName());
+	}
 
 
 }
