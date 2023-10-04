@@ -159,6 +159,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	private final Map<Class<?>, Object> resolvableDependencies = new ConcurrentHashMap<>(16);
 
 	/** Map of bean definition objects, keyed by bean name. */
+	// 注册表，由 BeanDefinition 的标识 （beanName） 与其实例组成
 	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
 
 	/** Map from bean name to merged BeanDefinitionHolder. */
@@ -171,6 +172,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	private final Map<Class<?>, String[]> singletonBeanNamesByType = new ConcurrentHashMap<>(64);
 
 	/** List of bean definition names, in registration order. */
+	// 标识（beanName）集合
 	private volatile List<String> beanDefinitionNames = new ArrayList<>(256);
 
 	/** List of names of manually registered singletons, in registration order. */
@@ -953,7 +955,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 				// beanDefinitionMap 为全局变量，避免并发情况
 				// Cannot modify startup-time collection elements anymore (for stable iteration)
 				synchronized (this.beanDefinitionMap) {
-					// 添加到 BeanDefinition 到 beanDefinitionMap 中。
+					// <x> 添加到 BeanDefinition 到 beanDefinitionMap 中。
 					this.beanDefinitionMap.put(beanName, beanDefinition);
 					// 添加 beanName 到 beanDefinitionNames 中
 					List<String> updatedDefinitions = new ArrayList<>(this.beanDefinitionNames.size() + 1);
@@ -966,7 +968,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 			else {
 				// Still in startup registration phase
-				// 添加到 BeanDefinition 到 beanDefinitionMap 中。
+				// <x> 添加到 BeanDefinition 到 beanDefinitionMap 中。
 				this.beanDefinitionMap.put(beanName, beanDefinition);
 				// 添加 beanName 到 beanDefinitionNames 中
 				this.beanDefinitionNames.add(beanName);
