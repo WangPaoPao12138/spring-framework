@@ -7,7 +7,12 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertyResolver;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.PropertySourcesPropertyResolver;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mock.env.MockPropertySource;
 
 import java.io.IOException;
 
@@ -141,5 +146,17 @@ public class MyTest {
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
 		Student student = (Student) context.getBean("studentForConvert");
 		System.out.println("studentForConvert name:" + student.getStudentService());
+	}
+
+	@Test
+	public void testPropertyResolver() {
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		MutablePropertySources propertySources = new MutablePropertySources();
+		propertySources.addFirst(new MockPropertySource().withProperty("name", "GinValue"));
+		PropertyResolver propertyResolver = new PropertySourcesPropertyResolver(propertySources);
+
+		System.out.println(propertyResolver.getProperty("name"));
+		System.out.println(propertyResolver.getProperty("name", "Gin"));
+		System.out.println(propertyResolver.resolvePlaceholders("my name is  ${name}"));
 	}
 }
