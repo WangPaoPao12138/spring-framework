@@ -78,4 +78,19 @@
 		<property name="name" value="${student.name}"/>
 	</bean>
 
+	<bean id="conversionService"
+		  class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<ref bean="studentConversionService"/>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="studentConversionService" class="mytest.obj.StudentConversionService"/>
+
+	<bean id="studentForConvert" class="mytest.obj.Student">
+		<property name="studentService" value="18#Gin"/>
+	</bean>
+
 </beans>

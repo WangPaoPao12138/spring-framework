@@ -24,4 +24,12 @@ public class StudentService {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+
+	@Override
+	public String toString() {
+		return "StudentService{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				'}';
+	}
 }

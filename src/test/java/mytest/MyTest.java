@@ -135,4 +135,11 @@ public class MyTest {
 	}
 
 
+	@Test
+	public void testConversionServiceFactoryBean() {
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
+		Student student = (Student) context.getBean("studentForConvert");
+		System.out.println("studentForConvert name:" + student.getStudentService());
+	}
 }
