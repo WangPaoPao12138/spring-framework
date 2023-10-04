@@ -72,6 +72,8 @@ public interface PropertyAccessor {
 
 
 	/**
+	 * 判断指定 property 是否可读，是否包含 getter 方法
+	 *
 	 * Determine whether the specified property is readable.
 	 * <p>Returns {@code false} if the property doesn't exist.
 	 * @param propertyName the property to check
@@ -81,6 +83,8 @@ public interface PropertyAccessor {
 	boolean isReadableProperty(String propertyName);
 
 	/**
+	 * 判断指定 property 是否可写,是否包含 setter 方法
+	 *
 	 * Determine whether the specified property is writable.
 	 * <p>Returns {@code false} if the property doesn't exist.
 	 * @param propertyName the property to check
@@ -90,6 +94,8 @@ public interface PropertyAccessor {
 	boolean isWritableProperty(String propertyName);
 
 	/**
+	 * 获取指定 propertyName 的类型
+	 *
 	 * Determine the property type for the specified property,
 	 * either checking the property descriptor or checking the value
 	 * in case of an indexed or mapped element.
@@ -130,6 +136,8 @@ public interface PropertyAccessor {
 	Object getPropertyValue(String propertyName) throws BeansException;
 
 	/**
+	 * 设置指定 propertyValue
+	 *
 	 * Set the specified value as current property value.
 	 * @param propertyName the name of the property to set the value of
 	 * (may be a nested path and/or an indexed/mapped property)

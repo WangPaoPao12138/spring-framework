@@ -62,16 +62,22 @@ public interface BeanWrapper extends ConfigurablePropertyAccessor {
 	int getAutoGrowCollectionLimit();
 
 	/**
+	 * - 获取包装对象的实例
+	 *
 	 * Return the bean instance wrapped by this object.
 	 */
 	Object getWrappedInstance();
 
 	/**
+	 * - 获取包装对象的类型
+	 *
 	 * Return the type of the wrapped bean instance.
 	 */
 	Class<?> getWrappedClass();
 
 	/**
+	 * - 获取包装对象所有属性的 PropertyDescriptor 就是这个属性的上下文
+	 *
 	 * Obtain the PropertyDescriptors for the wrapped object
 	 * (as determined by standard JavaBeans introspection).
 	 * @return the PropertyDescriptors for the wrapped object
@@ -79,6 +85,8 @@ public interface BeanWrapper extends ConfigurablePropertyAccessor {
 	PropertyDescriptor[] getPropertyDescriptors();
 
 	/**
+	 * - 获取包装对象指定属性的上下文
+	 *
 	 * Obtain the property descriptor for a specific property
 	 * of the wrapped object.
 	 * @param propertyName the property to obtain the descriptor for
