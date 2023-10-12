@@ -131,6 +131,7 @@ public class MyTest {
 		StudentService studentService = (StudentService) context.getBean("student_1");
 		System.out.println("student_1 name:" + studentService.getName());
 	}
+
 	//@Test -Dspring.profiles.active=dev 不生效
 	public static void main(String[] args) {
 		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
@@ -158,5 +159,18 @@ public class MyTest {
 		System.out.println(propertyResolver.getProperty("name"));
 		System.out.println(propertyResolver.getProperty("name", "Gin"));
 		System.out.println(propertyResolver.resolvePlaceholders("my name is  ${name}"));
+	}
+
+	@Test
+	public void testDependsOnCycle() {
+		// ApplicationContext 实例对象的时候会调用 #registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) 方法
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml", MyTest.class);
+		A a = (A) context.getBean("a");
+		B b = (B) context.getBean("b");
+		System.out.println("---1---" + a);
+		System.out.println("---2---" +a.getB());
+		System.out.println("---3---" +b);
+		System.out.println("---4---" +b.getA());
+
 	}
 }
