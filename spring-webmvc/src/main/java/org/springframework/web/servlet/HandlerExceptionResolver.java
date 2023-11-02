@@ -50,6 +50,9 @@ public interface HandlerExceptionResolver {
 	 * or {@code null} for default processing in the resolution chain
 	 */
 	@Nullable
+	/**
+	 * 解析异常，转换成对应的 ModelAndView 结果
+	 */
 	ModelAndView resolveException(
 			HttpServletRequest request, HttpServletResponse response, @Nullable Object handler, Exception ex);
 

@@ -39,6 +39,9 @@ public interface RequestToViewNameTranslator {
 	 * @throws Exception if view name translation fails
 	 */
 	@Nullable
+	/**
+	 * 根据请求，获得其视图名
+	 */
 	String getViewName(HttpServletRequest request) throws Exception;
 
 }
