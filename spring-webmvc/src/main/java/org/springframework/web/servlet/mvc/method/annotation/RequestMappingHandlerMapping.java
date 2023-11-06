@@ -355,7 +355,7 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 		if (matchingInfo == null) { // 如果不匹配，则返回 null
 			return null;
 		}
-		// 获得请求路径的集合
+		// 获得请求路径的集合AbstractUrlHandlerMapping
 		Set<String> patterns = matchingInfo.getPatternsCondition().getPatterns();
 		// 获得请求的路径
 		String lookupPath = getUrlPathHelper().getLookupPathForRequest(request);
