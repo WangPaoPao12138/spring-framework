@@ -64,6 +64,9 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 
 	private static final Method CALLABLE_METHOD = ClassUtils.getMethod(Callable.class, "call");
 
+	/**
+	 * 返回结果处理器
+	 */
 	@Nullable
 	private HandlerMethodReturnValueHandlerComposite returnValueHandlers;
 
@@ -140,23 +143,27 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 	 * Set the response status according to the {@link ResponseStatus} annotation.
 	 */
 	private void setResponseStatus(ServletWebRequest webRequest) throws IOException {
+		// 获得状态码。
+		// 此处，想要非空，需要通过 @ResponseStatus 注解方法
 		HttpStatus status = getResponseStatus();
-		if (status == null) {
+		if (status == null) { // 若为空，则返回
 			return;
 		}
 
+		// 设置响应的状态码
 		HttpServletResponse response = webRequest.getResponse();
 		if (response != null) {
 			String reason = getResponseStatusReason();
-			if (StringUtils.hasText(reason)) {
+			if (StringUtils.hasText(reason)) { // 有 reason ，则设置 status + reason
 				response.sendError(status.value(), reason);
 			}
-			else {
+			else { // 无 reason ，则仅设置 status
 				response.setStatus(status.value());
 			}
 		}
 
 		// To be picked up by RedirectView
+		// 为了 RedirectView ，所以进行设置
 		webRequest.getRequest().setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, status);
 	}
 
