@@ -71,15 +71,19 @@ public class RequestParamMapMethodArgumentResolver implements HandlerMethodArgum
 	public Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
 
+		//获取请求参数类型
 		ResolvableType resolvableType = ResolvableType.forMethodParameter(parameter);
 
+		//看是否是 MultiValue
 		if (MultiValueMap.class.isAssignableFrom(parameter.getParameterType())) {
 			// MultiValueMap
 			Class<?> valueType = resolvableType.as(MultiValueMap.class).getGeneric(1).resolve();
+			//MultipartFile 类型
 			if (valueType == MultipartFile.class) {
 				MultipartRequest multipartRequest = MultipartResolutionDelegate.resolveMultipartRequest(webRequest);
 				return (multipartRequest != null ? multipartRequest.getMultiFileMap() : new LinkedMultiValueMap<>(0));
 			}
+			//Part 类型
 			else if (valueType == Part.class) {
 				HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
 				if (servletRequest != null && MultipartResolutionDelegate.isMultipartRequest(servletRequest)) {
@@ -92,6 +96,7 @@ public class RequestParamMapMethodArgumentResolver implements HandlerMethodArgum
 				}
 				return new LinkedMultiValueMap<>(0);
 			}
+			//剩下类型
 			else {
 				Map<String, String[]> parameterMap = webRequest.getParameterMap();
 				MultiValueMap<String, String> result = new LinkedMultiValueMap<>(parameterMap.size());
@@ -104,18 +109,23 @@ public class RequestParamMapMethodArgumentResolver implements HandlerMethodArgum
 			}
 		}
 
+		//常规 map
 		else {
 			// Regular Map
 			Class<?> valueType = resolvableType.asMap().getGeneric(1).resolve();
+			//MultipartFile 类型 文件
 			if (valueType == MultipartFile.class) {
 				MultipartRequest multipartRequest = MultipartResolutionDelegate.resolveMultipartRequest(webRequest);
 				return (multipartRequest != null ? multipartRequest.getFileMap() : new LinkedHashMap<>(0));
 			}
+			//Part 类型
 			else if (valueType == Part.class) {
 				HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
+				//
 				if (servletRequest != null && MultipartResolutionDelegate.isMultipartRequest(servletRequest)) {
 					Collection<Part> parts = servletRequest.getParts();
 					LinkedHashMap<String, Part> result = new LinkedHashMap<>(parts.size());
+					//遍历塞值
 					for (Part part : parts) {
 						if (!result.containsKey(part.getName())) {
 							result.put(part.getName(), part);
@@ -125,7 +135,9 @@ public class RequestParamMapMethodArgumentResolver implements HandlerMethodArgum
 				}
 				return new LinkedHashMap<>(0);
 			}
+			//剩下的类型
 			else {
+				//遍历塞首个值
 				Map<String, String[]> parameterMap = webRequest.getParameterMap();
 				Map<String, String> result = new LinkedHashMap<>(parameterMap.size());
 				parameterMap.forEach((key, values) -> {
