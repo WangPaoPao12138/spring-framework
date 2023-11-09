@@ -78,10 +78,16 @@ public abstract class AbstractMessageConverterMethodArgumentResolver implements 
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * HttpMessageConverter 数组
+	 */
 	protected final List<HttpMessageConverter<?>> messageConverters;
 
 	protected final List<MediaType> allSupportedMediaTypes;
 
+	/**
+	 * RequestResponseBodyAdviceChain 对象
+	 */
 	private final RequestResponseBodyAdviceChain advice;
 
 
@@ -102,6 +108,7 @@ public abstract class AbstractMessageConverterMethodArgumentResolver implements 
 		Assert.notEmpty(converters, "'messageConverters' must not be empty");
 		this.messageConverters = converters;
 		this.allSupportedMediaTypes = getAllSupportedMediaTypes(converters);
+		// 构造方法中
 		this.advice = new RequestResponseBodyAdviceChain(requestResponseBodyAdvice);
 	}
 
